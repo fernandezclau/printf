@@ -6,12 +6,12 @@
 /*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:22:30 by claferna          #+#    #+#             */
-/*   Updated: 2024/03/22 21:08:26 by claferna         ###   ########.fr       */
+/*   Updated: 2024/03/23 13:56:18 by claferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBFTPRINTF_H
-# define LIBFTPRINTF_H
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
 /* STD LIB*/
 # include <stdarg.h>
@@ -22,24 +22,24 @@
 /*MAIN FUNCTION*/
 int		ft_printf(char const *format, ...);
 /*CHAR*/
-void	ft_print_char(va_list arg);
-void	ft_putchar(char c);
+void	ft_print_char(va_list arg, int *bytes);
+void	ft_putchar(char c, int *bytes);
 /*STRING*/
-void	ft_print_str(va_list arg);
-void	ft_putstr(char *str);
+void	ft_print_str(va_list arg, int *bytes);
+void	ft_putstr(char *str, int *bytes);
+void	ft_putstr_reverse(char *str, int index);
 /*VOID*/
-void	ft_print_vd(va_list arg);
-void	ft_putvd(void *vd);
+void	ft_print_vd(va_list arg, int *bytes);
+void	ft_putvd(void *vd, int *bytes);
 /*DECIMAL*/
-void	ft_print_decimal(va_list arg);
-void	ft_putnbr(int nb);
+void	ft_print_decimal(va_list arg, int *bytes);
+void	ft_putnbr(int nb, int *bytes);
 /*UNSIGNED DECIMAL*/
-void	ft_print_udecimal(va_list arg);
-void	ft_putu_nbr(unsigned int u_nb);
+void	ft_print_udecimal(va_list arg, int *bytes);
+void	ft_putu_nbr(unsigned int u_nb, int *bytes);
 /*HEXADECIMAL LOWERCASE/UPPERCASE*/
-void	ft_print_hexa(va_list arg, int is_low);
-void	ft_puthexa_low(unsigned int decimal);
-void	ft_puthexa_upp(unsigned int decimal);
+void	ft_print_hexa(va_list arg, int is_low, int *bytes);
+void	ft_puthexa(unsigned int decimal, int is_low, int *bytes);
 /*PERCENTAGE*/
-void	ft_print_percentage();
+void	ft_print_percentage(int *bytes);
 #endif

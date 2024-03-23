@@ -6,24 +6,33 @@
 /*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 18:28:37 by claferna          #+#    #+#             */
-/*   Updated: 2024/03/22 20:36:09 by claferna         ###   ########.fr       */
+/*   Updated: 2024/03/23 12:12:51 by claferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
-void	ft_putvd(void *vd)
+/*
+** DESCRIPTION: Funtions to print void.
+*/
+
+void	ft_putvd(void *vd, int *bytes)
 {
-	int	vd_len;
 
-	vd_len = ft_strlen(vd);
-	write(1, "0x", vd_len);
+	write(1, "0x", 2);
+	*(bytes) += 2;
+	if ((int) vd == 0)
+	{
+		ft_putchar('0', bytes);
+		return ;
+	}
+	ft_puthexa((unsigned int) vd, 1, bytes);
 }
 
-void	ft_print_vd(va_list arg)
+void	ft_print_vd(va_list arg, int *bytes)
 {
 	void	*vd;
 
 	vd = va_arg(arg, void *);
-	ft_putvd(vd);
+	ft_putvd(vd, bytes);
 }

@@ -6,37 +6,41 @@
 /*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:49:56 by claferna          #+#    #+#             */
-/*   Updated: 2024/03/22 20:28:37 by claferna         ###   ########.fr       */
+/*   Updated: 2024/03/23 13:50:20 by claferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
-void	ft_putnbr(int nb)
+/*
+** DESCRIPTION: Functions to print decimals
+*/
+
+void	ft_putnbr(int nb, int *bytes)
 {
 	if (nb == -2147483648)
 	{
-		write(1, "-2147483648", 11);
+		ft_putstr("-2147483648", bytes);
 		return ;
 	}
 	if (nb < 0)
 	{
-		write(1, "-", 1);
+		ft_putchar('-', bytes);
 		nb *= -1;
 	}
 	if (nb > 9)
 	{
-		ft_putnbr(nb / 10);
-		ft_putchar(nb % 10 + '0');
+		ft_putnbr(nb / 10, bytes);
+		ft_putchar(nb % 10 + '0', bytes);
 	}
 	else
-		ft_putchar(nb + '0');
+		ft_putchar(nb + '0', bytes);
 }
 
-void	ft_print_decimal(va_list arg)
+void	ft_print_decimal(va_list arg, int *bytes)
 {
 	int	decimal;
 
 	decimal = va_arg(arg, int);
-	ft_putnbr(decimal);
+	ft_putnbr(decimal, bytes);
 }

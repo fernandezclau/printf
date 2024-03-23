@@ -6,13 +6,18 @@
 /*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 19:14:43 by claferna          #+#    #+#             */
-/*   Updated: 2024/03/22 20:30:44 by claferna         ###   ########.fr       */
+/*   Updated: 2024/03/23 12:18:57 by claferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
-void	ft_print_percentage(void)
+/*
+** DESCRIPTION: Function to print %
+*/
+
+void	ft_print_percentage(int *bytes)
 {
 	write(1, "%", 1);
+	(*bytes)++;
 }

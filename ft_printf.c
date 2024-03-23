@@ -6,133 +6,95 @@
 /*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:19:08 by claferna          #+#    #+#             */
-/*   Updated: 2024/03/22 21:08:17 by claferna         ###   ########.fr       */
+/*   Updated: 2024/03/23 13:53:39 by claferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
-#include <stdio.h>
+#include "ft_printf.h"
 
-void	ft_print_format(char type, va_list arg)
+/*
+** DESCRIPTION: Partially reproduces the behavior of the printf function.
+*/
+
+void	ft_print_format(char type, va_list arg, int *bytes)
 {
 	if (type == 'c')
-		ft_print_char(arg);
+		ft_print_char(arg, bytes);
 	else if (type == 's')
-		ft_print_str(arg);
-	/*else if (type == 'p')
-		ft_print_vd(arg);*/
+		ft_print_str(arg, bytes);
+	else if (type == 'p')
+		ft_print_vd(arg, bytes);
 	else if (type == 'd' || type == 'i')
-		ft_print_decimal(arg);
+		ft_print_decimal(arg, bytes);
 	else if (type == 'u')
-		ft_print_udecimal(arg);
+		ft_print_udecimal(arg, bytes);
 	else if (type == 'x')
-		ft_print_hexa(arg, 1);
+		ft_print_hexa(arg, 1, bytes);
 	else if (type == 'X')
-		ft_print_hexa(arg, 0);
+		ft_print_hexa(arg, 0, bytes);
 	else if (type == '%')
-		ft_print_percentage();
+		ft_print_percentage(bytes);
 }
+
 int	ft_printf(char const *format, ...)
 {
-	va_list args;
-	
+	va_list	args;
+	int		bytes;
+
+	bytes = 0;
 	va_start(args, format);
 	while (*format != '\0')
 	{
 		if (*format == '%')
 		{
 			format++;
-			ft_print_format(*format, args);
+			ft_print_format(*format, args, &bytes);
 		}
 		else
-			ft_putchar(*format);
+		{
+			ft_putchar(*format, &bytes);
+		}
 		format++;
 	}
-	
-	return (0);	
+	va_end(args);
+	return (bytes);
 }
-/*
+
+#include <stdio.h>
+
 int main(void)
 {
-	//CHARACTER
-	printf("----TESTS CARACTER----\n");
-	printf("-1. Imprimir un caracter--\n");
-	printf("Mi función:\n");
-	ft_printf("El caracter: %c", 'a');
+	printf("\n-----NULL-----\n");
+	printf("\n------------------\n");
+	int sum = printf("%%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %c%%", 'A', "42", 42, 42 ,42 , 42, 42, 'B', "-42", -42, -42 ,-42 ,-42, 42, 'C', "0", 0, 0 ,0 ,0, 42, 0);
 	printf("\n");
-	printf("Original:\n");
-	printf("El caracter: %c", 'a');
+	printf("Resultado esperado %d", sum);
 	printf("\n");
-	//STRING
-	printf("----TESTS STRINGS----\n");
-	printf("-1. Imprimir un string--\n");
-	printf("Mi función: \n");
-	ft_printf("El string: %s", "hola");
+	sum = ft_printf("%%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %%%c%%%s%%%d%%%i%%%u%%%x%%%X%%%% %c%%", 'A', "42", 42, 42 ,42 , 42, 42, 'B', "-42", -42, -42 ,-42 ,-42, 42, 'C', "0", 0, 0 ,0 ,0, 42, 0);
 	printf("\n");
-	printf("Original:\n");
-	printf("El string: %s", "hola");
+	printf("Resultado actual %d", sum);
+	printf("\n------------------\n");
+	//RETURN %
+	printf("\n-----PERCENTAGE-----\n");
+	printf("\n------------------\n");
+	sum = printf("%x", -200000);
 	printf("\n");
-	//POINTER
-	printf("----TESTS POINTER----\n");
-	printf("-1. Imprimir una dirección de memoria--\n");
-	printf("Mi función:\n");
-	ft_printf("La direccion de memoria: %p", (void *)"123");
+	printf("Resultado esperado %d", sum);
 	printf("\n");
-	printf("Original:\n");
-	printf("La direccion de memoria: %p", (void *)"123");
+	sum = ft_printf("%x", -200000);
 	printf("\n");
-	//DECIMAL
-	printf("----TESTS DECIMAL----\n");
-	printf("-1. Imprimir un decimal--\n");
-	printf("Mi función: \n");
-	ft_printf("El decimal: %d", 1234);
+	printf("Resultado actual %d", sum);
+	printf("\n------------------\n");
+	//RETURN %
+	printf("\n-----PERCENTAGE-----\n");
+	printf("\n------------------\n");
+	sum = printf(" %p ", (void *) -53);
 	printf("\n");
-	printf("Original:\n");
-	printf("El decimal: %d", 1234);
+	printf("Resultado esperado %d", sum);
 	printf("\n");
-	//INTEGER
-	printf("----TESTS INTEGER----\n");
-	printf("-1. Imprimir un integer--\n");
-	printf("Mi función: \n");
-	ft_printf("El integer: %i", 1234);
+	sum = ft_printf(" %p ", (void *) -53);
 	printf("\n");
-	printf("Original:\n");
-	printf("El integer: %i", 1234);
-	printf("\n");
-	//UNSIGNED DECIMAL
-	printf("----TESTS UNSIGNED DECIMAL----\n");
-	printf("-1. Imprimir un decimal sin signo--\n");
-	printf("Mi función: \n");
-	ft_printf("El decimal sin signo: %u", 1234);
-	printf("\n");
-	printf("Original:\n");
-	printf("El decimal sin signo: %u", 1234);
-	printf("\n");
-	//LOW HEXADECIMAL
-	printf("----TESTS HEXA LOW----\n");
-	printf("-1. Imprimir un decimal--\n");
-	printf("Mi función: \n");
-	ft_printf("El decimal: %x", 16);
-	printf("\n");
-	printf("Original:\n");
-	printf("El decimal: %x", 1234);
-	printf("\n");
-	//UPP HEXADECIMAL
-	printf("----TESTS HEXA UP----\n");
-	printf("-1. Imprimir un decimal--\n");
-	printf("Mi función: \n");
-	ft_printf("El decimal: %X", 1234);
-	printf("\n");
-	printf("Original:\n");
-	printf("El decimal: %X", 1234);
-	printf("\n");
-	//PERCENTAGE
-	printf("----TESTS PERCENTAGE----\n");
-	printf("-1. Imprimir un porcentaje--\n");
-	printf("Mi función: \n");
-	ft_printf("El porcentaje: %%");
-	printf("\n");
-	printf("Original:\n");
-	printf("El decimal: %%");
-	printf("\n");
-}*/
+	printf("Resultado actual %d", sum);
+	printf("\n------------------\n");
+	
+}

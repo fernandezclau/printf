@@ -6,38 +6,49 @@
 /*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 19:15:56 by claferna          #+#    #+#             */
-/*   Updated: 2024/03/22 21:09:48 by claferna         ###   ########.fr       */
+/*   Updated: 2024/03/23 13:51:35 by claferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libftprintf.h"
+#include "ft_printf.h"
 
-void	ft_puthexa_low(unsigned int decimal)
+/*
+** DESCRIPTION: Functions to print in hexadecimal
+*/
+
+void	ft_puthexa(unsigned int decimal, int is_low, int *bytes)
 {
+	char	hex_str[25];
+	char	*hex_chars;
+	int		index;
 
+	index = 0;
+	hex_chars = "0123456789abcdef";
+	if (!is_low)
+		hex_chars = "0123456789ABCDEF";
+	if (decimal == 0)
+	{
+		ft_putnbr(0, bytes);
+		return ;
+	}
 	while (decimal > 0)
 	{
-		ft_putchar("0123456789abcdef"[decimal / 16]);
-		ft_putchar("0123456789abcdef"[decimal % 16]);
+		hex_str[index] = hex_chars [decimal % 16];
+		decimal /= 16;
+		index++;
+		(*bytes)++;
 	}
-	//hex = &"0123456789abcdef"[decimal % 16];
+	hex_str[index] = 0;
+	ft_putstr_reverse(hex_str, index);
 }
 
-void	ft_puthexa_upp(unsigned int decimal)
-{
-	char	*hex;
-
-	hex = &"0123456789ABCDEF"[decimal % 16];
-	write(1, &hex, 30);
-}
-
-void	ft_print_hexa(va_list arg, int is_low)
+void	ft_print_hexa(va_list arg, int is_low, int *bytes)
 {
 	unsigned int	num;
 
 	num = va_arg(arg, unsigned int);
-	if (is_low)
-		ft_puthexa_low(num);
+	if (is_low == 1)
+		ft_puthexa(num, 1, bytes);
 	else
-		ft_puthexa_upp(num);
+		ft_puthexa(num, 0, bytes);
 }
