@@ -6,7 +6,7 @@
 /*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 19:15:56 by claferna          #+#    #+#             */
-/*   Updated: 2024/03/23 13:51:35 by claferna         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:39:04 by claferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 ** DESCRIPTION: Functions to print in hexadecimal
 */
 
-void	ft_puthexa(unsigned int decimal, int is_low, int *bytes)
+void	ft_puthexa(unsigned long decimal, int is_low, int *bytes)
 {
 	char	hex_str[25];
 	char	*hex_chars;
@@ -36,10 +36,10 @@ void	ft_puthexa(unsigned int decimal, int is_low, int *bytes)
 		hex_str[index] = hex_chars [decimal % 16];
 		decimal /= 16;
 		index++;
-		(*bytes)++;
 	}
-	hex_str[index] = 0;
-	ft_putstr_reverse(hex_str, index);
+	hex_str[index] = '\0';
+	while (index--)
+		ft_putchar(hex_str[index], bytes);
 }
 
 void	ft_print_hexa(va_list arg, int is_low, int *bytes)

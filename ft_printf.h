@@ -39,7 +39,7 @@ void	ft_print_udecimal(va_list arg, int *bytes);
 void	ft_putu_nbr(unsigned int u_nb, int *bytes);
 /*HEXADECIMAL LOWERCASE/UPPERCASE*/
 void	ft_print_hexa(va_list arg, int is_low, int *bytes);
-void	ft_puthexa(unsigned int decimal, int is_low, int *bytes);
+void	ft_puthexa(unsigned long decimal, int is_low, int *bytes);
 /*PERCENTAGE*/
 void	ft_print_percentage(int *bytes);
 #endif

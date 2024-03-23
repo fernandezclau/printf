@@ -6,7 +6,7 @@
 /*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 19:58:55 by claferna          #+#    #+#             */
-/*   Updated: 2024/03/23 13:52:11 by claferna         ###   ########.fr       */
+/*   Updated: 2024/03/23 15:27:48 by claferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 
 void	ft_putstr_reverse(char *str, int index)
 {
-	while (index >= 0)
+	index--;
+	while (index > 0)
 		write(1, &str[index--], 1);
 }
 
