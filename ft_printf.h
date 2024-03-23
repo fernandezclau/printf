@@ -6,7 +6,7 @@
 /*   By: claferna <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 16:22:30 by claferna          #+#    #+#             */
-/*   Updated: 2024/03/23 13:56:18 by claferna         ###   ########.fr       */
+/*   Updated: 2024/03/23 16:40:39 by claferna         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 /* STD LIB*/
 # include <stdarg.h>
 # include <unistd.h>
-/* OWN LIB*/
-# include "libft/libft.h"
 
 /*MAIN FUNCTION*/
 int		ft_printf(char const *format, ...);
